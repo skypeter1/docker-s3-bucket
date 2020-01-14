@@ -18,6 +18,12 @@ RUN apt-get update && \
 
 RUN pip3 --no-cache-dir install --upgrade awscli
 
+## Install S3 Fuse
+RUN rm -rf /usr/src/s3fs-fuse
+RUN git clone https://github.com/s3fs-fuse/s3fs-fuse/ /usr/src/s3fs-fuse
+WORKDIR /usr/src/s3fs-fuse 
+RUN ./autogen.sh && ./configure && make && make install
+
 ## Create folder
 WORKDIR /var/www
 RUN mkdir s3
@@ -31,4 +37,9 @@ ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ## Set the directory where you want to mount your s3 bucket
 ARG S3_MOUNT_DIRECTORY=/var/www/s3
 ENV S3_MOUNT_DIRECTORY=$S3_MOUNT_DIRECTORY
+
+## Replace with your s3 bucket name
+ARG S3_BUCKET_NAME=your-s3-bucket-name
+ENV S3_BUCKET_NAME=$S3_BUCKET_NAME 
+
 
