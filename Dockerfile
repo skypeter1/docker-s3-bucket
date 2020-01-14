@@ -17,3 +17,7 @@ RUN apt-get update && \
     && apt-get clean
 
 RUN pip3 --no-cache-dir install --upgrade awscli
+
+## Create folder
+WORKDIR /var/www
+RUN mkdir s3
