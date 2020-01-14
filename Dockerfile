@@ -42,4 +42,14 @@ ENV S3_MOUNT_DIRECTORY=$S3_MOUNT_DIRECTORY
 ARG S3_BUCKET_NAME=your-s3-bucket-name
 ENV S3_BUCKET_NAME=$S3_BUCKET_NAME 
 
+## Mount S3 bucket and create automatic mount script
+RUN echo $AWS_ACCESS_KEY:$AWS_SECRET_ACCESS_KEY > /root/.passwd-s3fs && \
+    chmod 600 /root/.passwd-s3fs
 
+## change workdir to /
+WORKDIR /
+
+## Entry Point
+ADD start-script.sh /start-script.sh
+RUN chmod 755 /start-script.sh 
+CMD ["/start-script.sh"]
