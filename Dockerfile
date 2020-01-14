@@ -21,3 +21,14 @@ RUN pip3 --no-cache-dir install --upgrade awscli
 ## Create folder
 WORKDIR /var/www
 RUN mkdir s3
+
+## Set Your AWS Access credentials
+ARG AWS_ACCESS_KEY=YOURAWSACCESSKEY
+ENV AWS_ACCESS_KEY=$AWS_ACCESS_KEY
+ARG AWS_SECRET_ACCESS_KEY=YOURAWSSECRETACCESSKEY
+ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+
+## Set the directory where you want to mount your s3 bucket
+ARG S3_MOUNT_DIRECTORY=/var/www/s3
+ENV S3_MOUNT_DIRECTORY=$S3_MOUNT_DIRECTORY
+
