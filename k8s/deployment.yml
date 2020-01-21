@@ -1,0 +1,48 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: knowbly-s3-test
+  namespace: default
+  labels:
+    run: knowbly-s3-test
+  annotations:
+    deployment.kubernetes.io/revision: '2'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: knowbly-s3-test
+  template:
+    metadata:
+      labels:
+        run: knowbly-s3-test
+    spec:
+      containers:
+      - name: knowbly-s3-test
+        image: parboleda/s3:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP            
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: <YOURSECRETACCESSKEY>
+        - name: AWS_SECRET_ACCESS_KEY
+          value: <YOURSECRETACCESSKEY>
+        - name: S3_MOUNT_DIRECTORY
+          value: /var/www/s3
+        - name: S3_BUCKET_NAME
+          value: <name-of-your-project>                                                           
+        resources: 
+          requests:
+            cpu: "250m"       
+            memory: "256Mi"         
+          limits:
+            cpu: "1000m"
+            memory: "512Mi"
+        terminationMessagePath: "/dev/termination-log"
+        terminationMessagePolicy: File
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true   
+      restartPolicy: Always
