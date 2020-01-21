@@ -29,9 +29,9 @@ WORKDIR /var/www
 RUN mkdir s3
 
 ## Set Your AWS Access credentials
-ARG AWS_ACCESS_KEY=YOURAWSACCESSKEY
+ARG AWS_ACCESS_KEY=$AWS_ACCESS_KEY
 ENV AWS_ACCESS_KEY=$AWS_ACCESS_KEY
-ARG AWS_SECRET_ACCESS_KEY=YOURAWSSECRETACCESSKEY
+ARG AWS_SECRET_ACCESS_KEY=$AWS_ACCESS_KEY
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 
 ## Set the directory where you want to mount your s3 bucket
@@ -39,7 +39,7 @@ ARG S3_MOUNT_DIRECTORY=/var/www/s3
 ENV S3_MOUNT_DIRECTORY=$S3_MOUNT_DIRECTORY
 
 ## Replace with your s3 bucket name
-ARG S3_BUCKET_NAME=your-s3-bucket-name
+ARG S3_BUCKET_NAME=$S3_BUCKET_NAME 
 ENV S3_BUCKET_NAME=$S3_BUCKET_NAME 
 
 ## Mount S3 bucket and create automatic mount script
@@ -52,4 +52,4 @@ WORKDIR /
 ## Entry Point
 ADD start-script.sh /start-script.sh
 RUN chmod 755 /start-script.sh 
-CMD ["/start-script.sh"]
+#CMD ["/start-script.sh"]
